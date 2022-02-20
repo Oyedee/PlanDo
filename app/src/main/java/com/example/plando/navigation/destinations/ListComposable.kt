@@ -11,7 +11,7 @@ import com.example.plando.util.Constants.LIST_SCREEN
 ////this composable contain one parameter which is an int type
 
 fun NavGraphBuilder.listComposable(
-    navigateToTaskScreen: (Int) -> Unit
+    navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
     composable(
         route = LIST_SCREEN,

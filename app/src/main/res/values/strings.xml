@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">PlanDo</string>
     <string name="add_button">add button</string>
+    <string name="search_tasks">search Tasks</string>
+    <string name="delete_all_actions">Delete All</string>
+    <string name="sort_action">Sort</string>
 </resources>
