@@ -1,23 +1,28 @@
 package com.example.plando.ui.screens.list
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
 import com.example.plando.R
 import com.example.plando.components.PriorityItem
 import com.example.plando.data.models.Priority
-import com.example.plando.ui.theme.topAppBarBackgroundColor
-import com.example.plando.ui.theme.topAppBarContentColor
 import com.example.plando.ui.screens.list.ListAppBarActions
-import com.example.plando.ui.theme.LARGE_PADDING
-import com.example.plando.ui.theme.Typography
+import com.example.plando.ui.theme.*
 
 
 @Composable
@@ -138,5 +143,75 @@ fun DeleteAllAction(onDeleteClicked: () -> Unit) {
                 )
             }
         }
+    }
+}
+
+@Composable
+fun SearchAppBar(
+    text: String,
+    onTextChange: (String) -> Unit,
+    onCloseClicked: () -> Unit,
+    onSearchClicked: (String) -> Unit
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(TOP_APP_BAR_HEIGHT),
+        elevation = AppBarDefaults.TopAppBarElevation,
+        color = MaterialTheme.colors.topAppBarBackgroundColor
+    ) {
+        TextField(
+            value = text,
+            onValueChange = {
+                onTextChange(it)
+            },
+            placeholder = {
+                Text(
+                    modifier = Modifier.alpha(ContentAlpha.medium),
+                    text = "Search",
+                    color = Color.White
+                )
+            },
+            textStyle = TextStyle(
+                color = MaterialTheme.colors.topAppBarContentColor,
+                fontSize = MaterialTheme.typography.subtitle1.fontSize
+            ),
+            singleLine = true,
+            leadingIcon = {
+                IconButton(
+                    modifier = Modifier.alpha(ContentAlpha.disabled),
+                    onClick = { /*TODO*/ }) {
+                    Icon(
+                        imageVector = Icons.Filled.Search,
+                        contentDescription = "Search Icon",
+                        tint = MaterialTheme.colors.topAppBarContentColor
+                    )
+                }
+            },
+            trailingIcon = {
+                IconButton(onClick = { onCloseClicked() }) {
+                    Icon(
+                        imageVector = Icons.Filled.Close,
+                        contentDescription = "close search",
+                        tint = MaterialTheme.colors.topAppBarContentColor
+                    )
+                }
+            },
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Search
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    onSearchClicked(text)
+                }
+            ),
+            colors = TextFieldDefaults.textFieldColors(
+                cursorColor = MaterialTheme.colors.topAppBarContentColor,
+                focusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                backgroundColor = Color.Transparent
+            )
+        )
     }
 }
