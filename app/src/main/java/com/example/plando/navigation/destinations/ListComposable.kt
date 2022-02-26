@@ -1,5 +1,6 @@
 package com.example.plando.navigation.destinations
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
@@ -9,8 +10,9 @@ import com.example.plando.ui.viewmodel.SharedViewModel
 import com.example.plando.util.Constants.LIST_ARGUMENT_KEY
 import com.example.plando.util.Constants.LIST_SCREEN
 
-////this composable contain one parameter which is an int type
+////this composable contain one lambda parameter which is an int type
 
+@ExperimentalMaterialApi
 fun NavGraphBuilder.listComposable(
     navigateToTaskScreen: (taskId: Int) -> Unit,
     sharedViewModel: SharedViewModel

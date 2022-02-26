@@ -2,6 +2,8 @@ package com.example.plando.ui.screens.list
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -18,9 +20,23 @@ import com.example.plando.data.models.Priority
 import com.example.plando.data.models.ToDoTask
 import com.example.plando.ui.theme.*
 
+@ExperimentalMaterialApi
 @Composable
-fun ListContent() {
-
+fun ListContent(
+    tasks: List<ToDoTask>,
+    navigateToTaskScreen: (taskId: Int) -> Unit
+) {
+    //implementation of RecyclerView in compose
+    LazyColumn {
+        items(
+            items = tasks,
+            key = { task ->
+                task.id
+            }
+        ) { task ->
+            TaskItem(toDoTask = task , navigateToTaskScreen = navigateToTaskScreen )
+        }
+    }
 }
 
 @ExperimentalMaterialApi
@@ -52,11 +68,17 @@ fun TaskItem(
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
                 )
-                Box(modifier = Modifier.fillMaxWidth().weight(1f),
-                contentAlignment = Alignment.TopEnd) {
-                    Canvas(modifier = Modifier
-                        .width(PRIORITY_INDICATOR_SIZE)
-                        .height(PRIORITY_INDICATOR_SIZE)) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    contentAlignment = Alignment.TopEnd
+                ) {
+                    Canvas(
+                        modifier = Modifier
+                            .width(PRIORITY_INDICATOR_SIZE)
+                            .height(PRIORITY_INDICATOR_SIZE)
+                    ) {
                         drawCircle(
                             color = toDoTask.priority.color
                         )
